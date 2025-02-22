@@ -275,7 +275,7 @@ def test_swapCollectPoolFirst(deployment, n, request, worker_id):
     unsaltedPoolId = (1 << 254) + (n << 188) + (twosComplementInt8(logOffset) << 180) + (0b11111111111111111111 << 160) + toInt(hook.address)
     poolId = getPoolId(owner.address, unsaltedPoolId)
 
-    deadline = 2 ** 256 - 1
+    deadline = 2 ** 32 - 1
 
     pool = Pool(
         logOffset,
