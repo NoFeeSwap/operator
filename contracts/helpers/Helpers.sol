@@ -6,6 +6,8 @@ import {Nofeeswap} from "@core/Nofeeswap.sol";
 import {NofeeswapDelegatee} from "@core/NofeeswapDelegatee.sol";
 import {MockHook} from "@core/helpers/MockHook.sol";
 import {ERC20FixedSupply} from "@core/helpers/ERC20FixedSupply.sol";
+import {ERC6909FixedSupply} from "@core/helpers/ERC6909FixedSupply.sol";
+import {ERC1155FixedSupply} from "@core/helpers/ERC1155FixedSupply.sol";
 import {Deployer} from "@governance/Deployer.sol";
 
 contract AccessHelper is Access {}
@@ -26,6 +28,21 @@ contract ERC20FixedSupplyHelper is ERC20FixedSupply {
     uint256 initialSupply,
     address owner
   ) ERC20FixedSupply(name, symbol, initialSupply, owner) {}
+}
+contract ERC6909FixedSupplyHelper is ERC6909FixedSupply {
+  constructor(
+    uint256 initialSupply,
+    uint256 id,
+    address owner
+  ) ERC6909FixedSupply(initialSupply, id, owner) {}
+}
+contract ERC1155FixedSupplyHelper is ERC1155FixedSupply {
+  constructor(
+    string memory uri,
+    uint256 initialSupply,
+    uint256 id,
+    address owner
+  ) ERC1155FixedSupply(uri, initialSupply, id, owner) {}
 }
 contract DeployerHelper is Deployer {
   constructor(address admin) Deployer(admin) {}
