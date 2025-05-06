@@ -492,7 +492,7 @@ interface IOperator {
   /// 'abi.encodePacked(
   ///    Action Action.READ_ALLOWANCE_ERC6909,
   ///    address token,
-  ///    unit256 id,
+  ///    uint256 id,
   ///    address owner,
   ///    address spender,
   ///    uint8 successSlot,
@@ -589,7 +589,7 @@ interface IOperator {
   /// @param tag0 The arithmetically larger tag.
   /// @param owner The double balance owner.
   /// @return value0Slot The transient slot to host the balance of 'tag0'.
-  /// @return value0Slot The transient slot to host the balance of 'tag1'.
+  /// @return value1Slot The transient slot to host the balance of 'tag1'.
   ///
   ///
   /// @param WRAP_NATIVE Wraps a 'value' of native token by invoking the
@@ -909,7 +909,7 @@ interface IOperator {
   /// 'abi.encodePacked(
   ///    Action Action.CLEAR,
   ///    Tag tag,
-  ///    uint8 amountSlot
+  ///    uint8 amountSlot,
   ///    uint8 successSlot
   ///  )'
   ///
@@ -1044,7 +1044,7 @@ interface IOperator {
   /// 'abi.encodePacked(
   ///    Action Action.SETTLE,
   ///    uint8 valueSlot,
-  ///    uint8 successSlot
+  ///    uint8 successSlot,
   ///    uint8 resultSlot
   ///  )'
   ///
@@ -1334,7 +1334,7 @@ interface IOperator {
   /// of 'tag1' donated.
   ///
   ///
-  /// @param QUOTE_SWAP Determins the incoming and outgoing values of a swap
+  /// @param QUOTE_SWAP Determines the incoming and outgoing values of a swap
   /// without executing it and making any changes to storage by invoking:
   ///
   /// 'IQuoter(quoter).swap(

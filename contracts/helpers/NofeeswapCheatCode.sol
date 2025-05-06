@@ -10,7 +10,7 @@ import {
 } from '@core/utilities/Memory.sol';
 import {writeStaticParams} from '@core/utilities/Storage.sol';
 
-/// @title These contracts allows manipulation of 'Nofeeswap.sol' storage for 
+/// @title These contracts allow manipulation of 'Nofeeswap.sol' storage for 
 /// testing purposes.
 contract NofeeswapCheatCode is Nofeeswap {
   constructor(

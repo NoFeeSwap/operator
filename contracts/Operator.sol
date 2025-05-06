@@ -656,18 +656,18 @@ contract Operator is IOperator, IUnlockCallback, TransientAccess {
           //  +---------------------------+-----------+----------------------+
           //
 
-          // Populates the least signifacnt 12 bytes of the memory slot 1 (from
-          // 52 to 64).
+          // Populates the least significant 12 bytes of the memory slot 1
+          // (from 52 to 64).
           mstore(32, transientBalanceSlot) // 32 = 62 - 32
 
-          // Populates the most signifacnt 20 bytes of the memory slot 1 (from
+          // Populates the most significant 20 bytes of the memory slot 1 (from
           // 32 to 52).
           mstore(20, owner) // 20 = 52 - 32
 
           // Populates the entire memory slot 0.
           mstore(0, tag) // 0 = 32 - 32
 
-          // Caculates the resulting hash.
+          // Calculates the resulting hash.
           let transientSlot := keccak256(0, 64)
 
           // The following lines invoke:
@@ -856,7 +856,7 @@ contract Operator is IOperator, IUnlockCallback, TransientAccess {
         // abi.encodePacked(
         //    Action Action.READ_ALLOWANCE_ERC6909,
         //    address token,
-        //    unit256 id,
+        //    uint256 id,
         //    address owner,
         //    address spender,
         //    uint8 successSlot,
