@@ -35,7 +35,7 @@ compiler:
         viaIR: true
         optimizer:
             enabled: true
-            runs: 1500
+            runs: 500
         remappings:
             - "@solady/=lib/solady/src/"
             - "@openzeppelin/=lib/openzeppelin-contracts/contracts/"
