@@ -117,7 +117,7 @@ def test_outOfRange(deployment, n, request, worker_id):
         assert _amount0 == ceiling(_amount0)
         assert _amount1 == ceiling(_amount1)
 
-        staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+        staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
         sharesGross = access._readSharesGross(nofeeswap, poolId)
         sharesDeltaLower = access._readSharesDelta(nofeeswap, poolId, lower)
         sharesDeltaUpper = access._readSharesDelta(nofeeswap, poolId, upper + 2 * spacing)
@@ -146,7 +146,7 @@ def test_outOfRange(deployment, n, request, worker_id):
         assert _amount0 == ceiling(_amount0)
         assert _amount1 == ceiling(_amount1)
 
-        staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+        staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
         sharesGross = access._readSharesGross(nofeeswap, poolId)
         sharesDeltaLower = access._readSharesDelta(nofeeswap, poolId, lower - 2 * spacing)
         sharesDeltaUpper = access._readSharesDelta(nofeeswap, poolId, upper)
@@ -175,7 +175,7 @@ def test_outOfRange(deployment, n, request, worker_id):
         assert _amount0 == ceiling(_amount0)
         assert _amount1 == ceiling(_amount1)
 
-        staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+        staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
         sharesGross = access._readSharesGross(nofeeswap, poolId)
         sharesDeltaLower = access._readSharesDelta(nofeeswap, poolId, lower - 2 * spacing)
         sharesDeltaUpper = access._readSharesDelta(nofeeswap, poolId, upper + 2 * spacing)
@@ -272,7 +272,7 @@ def test_outOfRange(deployment, n, request, worker_id):
         data = encode_packed(['uint32'] + ['bytes'] * len(sequence), [deadline] + sequence)
         tx = nofeeswap.unlock(operator, data, {'from': owner})
 
-        staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+        staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
         sharesGross = access._readSharesGross(nofeeswap, poolId)
 
         sharesDeltaMin = access._readSharesDelta(nofeeswap, poolId, lower - 2 * spacing)

@@ -152,7 +152,7 @@ def test_swapCollectProtocolFirst(deployment, n, request, worker_id):
 
     ##############################
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     growth = Integer(growth) / (1 << 111)
     integral0 = Integer(integral0) / (1 << 216)
     integral1 = Integer(integral1) / (1 << 216)
@@ -355,7 +355,7 @@ def test_swapCollectPoolFirst(deployment, n, request, worker_id):
 
     ##############################
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     growth = Integer(growth) / (1 << 111)
     integral0 = Integer(integral0) / (1 << 216)
     integral1 = Integer(integral1) / (1 << 216)

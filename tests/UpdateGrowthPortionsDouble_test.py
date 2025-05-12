@@ -115,7 +115,7 @@ def test_updateOdd(deployment, n, request, worker_id):
 
     ##############################
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     tag0, tag1, sqrtOffset, sqrtInverseOffset, sqrtSpacing, sqrtInverseSpacing = access._readStaticParams0(nofeeswap, poolId, staticParamsStoragePointer)
     outgoingMax, outgoingMaxModularInverse, incomingMax, poolGrowthPortion, maxPoolGrowthPortion, protocolGrowthPortion, pendingKernelLength = access._readStaticParams1(nofeeswap, poolId, staticParamsStoragePointer)
     kernelArray = list(access._readKernel(nofeeswap, poolId, 0))
@@ -166,8 +166,8 @@ def test_updateOdd(deployment, n, request, worker_id):
     nofeeswap.callManipulator(
         manipulator,
         manipulator.manipulate.encode_input(
-            keccakPacked(['uint256', 'uint128'], [poolId, (keccak256('dynamicParams') - 1) % (1 << 128)]) + 2,
-            ((integral1 % (1 << 48)) << 208) + (sharesTotal << 80) + (storagePointer << 64) + logPriceCurrent
+            keccakPacked(['uint256', 'uint128'], [poolId, (keccak256('dynamicParams') - 1) % (1 << 128)]),
+            (storagePointer << (256 - 16)) + (logPriceCurrent << (256 - 16 - 64)) + (sharesTotal << (256 - 16 - 64 - 128)) + (growth >> 80)
         ),
         {'from': root}
     )
@@ -203,7 +203,7 @@ def test_updateOdd(deployment, n, request, worker_id):
     assert tx.events['UpdateGrowthPortions']['caller'] == owner.address
     assert toInt(tx.events['UpdateGrowthPortions']['data'].hex()) == event
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     tag0, tag1, sqrtOffset, sqrtInverseOffset, sqrtSpacing, sqrtInverseSpacing = access._readStaticParams0(nofeeswap, poolId, staticParamsStoragePointer)
     outgoingMax, outgoingMaxModularInverse, incomingMax, poolGrowthPortion, maxPoolGrowthPortion, protocolGrowthPortion, pendingKernelLength = access._readStaticParams1(nofeeswap, poolId, staticParamsStoragePointer)
     kernelArray = list(access._readKernel(nofeeswap, poolId, staticParamsStoragePointer))
@@ -277,7 +277,7 @@ def test_updateOdd(deployment, n, request, worker_id):
     assert tx.events['UpdateGrowthPortions']['caller'] == owner.address
     assert toInt(tx.events['UpdateGrowthPortions']['data'].hex()) == event
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     tag0, tag1, sqrtOffset, sqrtInverseOffset, sqrtSpacing, sqrtInverseSpacing = access._readStaticParams0(nofeeswap, poolId, staticParamsStoragePointerExtension)
     outgoingMax, outgoingMaxModularInverse, incomingMax, poolGrowthPortion, maxPoolGrowthPortion, protocolGrowthPortion, pendingKernelLength = access._readStaticParams1(nofeeswap, poolId, staticParamsStoragePointerExtension)
     kernelArray = list(access._readKernel(nofeeswap, poolId, staticParamsStoragePointerExtension))
@@ -351,7 +351,7 @@ def test_updateOdd(deployment, n, request, worker_id):
     assert tx.events['UpdateGrowthPortions']['caller'] == owner.address
     assert toInt(tx.events['UpdateGrowthPortions']['data'].hex()) == event
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     tag0, tag1, sqrtOffset, sqrtInverseOffset, sqrtSpacing, sqrtInverseSpacing = access._readStaticParams0(nofeeswap, poolId, staticParamsStoragePointerExtension)
     outgoingMax, outgoingMaxModularInverse, incomingMax, poolGrowthPortion, maxPoolGrowthPortion, protocolGrowthPortion, pendingKernelLength = access._readStaticParams1(nofeeswap, poolId, staticParamsStoragePointerExtension)
     kernelArray = list(access._readKernel(nofeeswap, poolId, staticParamsStoragePointerExtension))
@@ -462,7 +462,7 @@ def test_updateEven(deployment, n, request, worker_id):
 
     ##############################
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     tag0, tag1, sqrtOffset, sqrtInverseOffset, sqrtSpacing, sqrtInverseSpacing = access._readStaticParams0(nofeeswap, poolId, staticParamsStoragePointer)
     outgoingMax, outgoingMaxModularInverse, incomingMax, poolGrowthPortion, maxPoolGrowthPortion, protocolGrowthPortion, pendingKernelLength = access._readStaticParams1(nofeeswap, poolId, staticParamsStoragePointer)
     kernelArray = list(access._readKernel(nofeeswap, poolId, 0))
@@ -513,8 +513,8 @@ def test_updateEven(deployment, n, request, worker_id):
     nofeeswap.callManipulator(
         manipulator,
         manipulator.manipulate.encode_input(
-            keccakPacked(['uint256', 'uint128'], [poolId, (keccak256('dynamicParams') - 1) % (1 << 128)]) + 2,
-            ((integral1 % (1 << 48)) << 208) + (sharesTotal << 80) + (storagePointer << 64) + logPriceCurrent
+            keccakPacked(['uint256', 'uint128'], [poolId, (keccak256('dynamicParams') - 1) % (1 << 128)]),
+            (storagePointer << (256 - 16)) + (logPriceCurrent << (256 - 16 - 64)) + (sharesTotal << (256 - 16 - 64 - 128)) + (growth >> 80)
         ),
         {'from': root}
     )
@@ -550,7 +550,7 @@ def test_updateEven(deployment, n, request, worker_id):
     assert tx.events['UpdateGrowthPortions']['caller'] == owner.address
     assert toInt(tx.events['UpdateGrowthPortions']['data'].hex()) == event
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     tag0, tag1, sqrtOffset, sqrtInverseOffset, sqrtSpacing, sqrtInverseSpacing = access._readStaticParams0(nofeeswap, poolId, staticParamsStoragePointer)
     outgoingMax, outgoingMaxModularInverse, incomingMax, poolGrowthPortion, maxPoolGrowthPortion, protocolGrowthPortion, pendingKernelLength = access._readStaticParams1(nofeeswap, poolId, staticParamsStoragePointer)
     kernelArray = list(access._readKernel(nofeeswap, poolId, staticParamsStoragePointer))
@@ -624,7 +624,7 @@ def test_updateEven(deployment, n, request, worker_id):
     assert tx.events['UpdateGrowthPortions']['caller'] == owner.address
     assert toInt(tx.events['UpdateGrowthPortions']['data'].hex()) == event
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     tag0, tag1, sqrtOffset, sqrtInverseOffset, sqrtSpacing, sqrtInverseSpacing = access._readStaticParams0(nofeeswap, poolId, staticParamsStoragePointerExtension)
     outgoingMax, outgoingMaxModularInverse, incomingMax, poolGrowthPortion, maxPoolGrowthPortion, protocolGrowthPortion, pendingKernelLength = access._readStaticParams1(nofeeswap, poolId, staticParamsStoragePointerExtension)
     kernelArray = list(access._readKernel(nofeeswap, poolId, staticParamsStoragePointerExtension))
@@ -698,7 +698,7 @@ def test_updateEven(deployment, n, request, worker_id):
     assert tx.events['UpdateGrowthPortions']['caller'] == owner.address
     assert toInt(tx.events['UpdateGrowthPortions']['data'].hex()) == event
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     tag0, tag1, sqrtOffset, sqrtInverseOffset, sqrtSpacing, sqrtInverseSpacing = access._readStaticParams0(nofeeswap, poolId, staticParamsStoragePointerExtension)
     outgoingMax, outgoingMaxModularInverse, incomingMax, poolGrowthPortion, maxPoolGrowthPortion, protocolGrowthPortion, pendingKernelLength = access._readStaticParams1(nofeeswap, poolId, staticParamsStoragePointerExtension)
     kernelArray = list(access._readKernel(nofeeswap, poolId, staticParamsStoragePointerExtension))

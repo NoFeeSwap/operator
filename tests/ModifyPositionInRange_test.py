@@ -103,7 +103,7 @@ def test_inRange(deployment, n, request, worker_id):
     data = mintSequence(nofeeswap, token0, token1, tagShares, poolId, qMin, qMax, shares, hookData, deadline)
     tx = nofeeswap.unlock(operator, data, {'from': owner})
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     sharesGross = access._readSharesGross(nofeeswap, poolId)
     sharesDeltaLower = access._readSharesDelta(nofeeswap, poolId, lower)
     sharesDeltaUpper = access._readSharesDelta(nofeeswap, poolId, upper)
@@ -169,7 +169,7 @@ def test_inRange(deployment, n, request, worker_id):
     tx = nofeeswap.unlock(operator, data, {'from': owner})
     pool.modifyPosition(qMin, qMax, shares)
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     sharesGross = access._readSharesGross(nofeeswap, poolId)
     sharesDeltaLower = access._readSharesDelta(nofeeswap, poolId, lower)
     sharesDeltaUpper = access._readSharesDelta(nofeeswap, poolId, upper)
@@ -200,7 +200,7 @@ def test_inRange(deployment, n, request, worker_id):
     assert _amount0 == ceiling(_amount0)
     assert _amount1 == ceiling(_amount1)
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     sharesGross = access._readSharesGross(nofeeswap, poolId)
     sharesDeltaLower = access._readSharesDelta(nofeeswap, poolId, lower)
     sharesDeltaUpper = access._readSharesDelta(nofeeswap, poolId, upper)

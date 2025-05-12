@@ -107,7 +107,7 @@ def test_donate(deployment, n, request, worker_id):
     _amount0 = token0.balanceOf(nofeeswap)
     _amount1 = token1.balanceOf(nofeeswap)
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
 
     q = Integer(poolGrowthPortion) / (1 << 47)
     p = Integer(protocolGrowthPortion) / (1 << 47)

@@ -89,12 +89,12 @@ _kernelLength_ = 1615
 _curveLength_ = 1617
 _hookDataByteCount_ = 1619
 _dynamicParams_ = 1621
-_growth_ = 1653
-_integral0_ = 1669
-_integral1_ = 1696
-_sharesTotal_ = 1723
-_staticParamsStoragePointer_ = 1739
-_logPriceCurrent_ = 1741
+_staticParamsStoragePointer_ = 1653
+_logPriceCurrent_ = 1655
+_sharesTotal_ = 1663
+_growth_ = 1679
+_integral0_ = 1695
+_integral1_ = 1722
 _deploymentCreationCode_ = 1749
 _staticParams_ = 1760
 _tag0_ = 1760
@@ -1039,7 +1039,7 @@ def checkPool(nofeeswap, access, poolId, pool):
     minLogPrice = min(list(pool.growth.keys()))
     maxLogPrice = max(list(pool.growth.keys()))
 
-    staticParamsStoragePointerExtension, growth, integral0, integral1, sharesTotal, staticParamsStoragePointer, logPriceCurrent = access._readDynamicParams(nofeeswap, poolId)
+    staticParamsStoragePointerExtension, staticParamsStoragePointer, logPriceCurrent, sharesTotal, growth, integral0, integral1 = access._readDynamicParams(nofeeswap, poolId)
     curveArray = list(access._readCurve(nofeeswap, poolId, logPriceCurrent).return_value)
 
     sharesTotalAll = {}
