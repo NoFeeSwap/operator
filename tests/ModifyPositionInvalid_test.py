@@ -4,7 +4,7 @@ import brownie
 from brownie import accounts, Access, Nofeeswap, NofeeswapDelegatee, ERC20FixedSupply, MockHook, Operator, Deployer
 from eth_abi import encode
 from eth_abi.packed import encode_packed
-from Nofee import logTest, PUSH32, REVERT, TRANSFER_FROM_PAYER_ERC20, SYNC_TOKEN, SETTLE, MODIFY_SINGLE_BALANCE, MODIFY_POSITION, address0, thirtyTwoX59, keccak, toInt, twosComplementInt8, encodeKernelCompact, encodeCurve, getPoolId
+from Nofee import logTest, NEG, PUSH32, REVERT, TRANSFER_FROM_PAYER_ERC20, SYNC_TOKEN, SETTLE, MODIFY_SINGLE_BALANCE, MODIFY_POSITION, address0, thirtyTwoX59, keccak, toInt, twosComplementInt8, encodeKernelCompact, encodeCurve, getPoolId
 
 @pytest.fixture(autouse=True)
 def deployment(fn_isolation):
@@ -204,10 +204,40 @@ def test_invalid(deployment, request, worker_id):
     with brownie.reverts('LogPricesOutOfOrder: ' + str(upper) + ', ' + str(lower)):
         nofeeswap.unlock(operator, data, {'from': owner})
 
-    tagShares = keccak(['uint256', 'int256', 'int256'], [poolId, qMin, qMax])
+    sequence = [0] * 7
+    sequence[0] = encode_packed(
+      ['uint8', 'int256', 'uint8'],
+      [PUSH32, shares, sharesSlot]
+    )
+    sequence[1] = encode_packed(
+      ['uint8', 'uint256', 'uint64', 'uint64', 'uint8', 'uint8', 'uint8', 'uint8', 'uint16', 'bytes'],
+      [MODIFY_POSITION, poolId, lower, upper, sharesSlot, successSlot, amount0Slot, amount1Slot, len(hookData), hookData]
+    )
+    sequence[2] = encode_packed(
+      ['uint8', 'uint8', 'uint8'],
+      [NEG, sharesSlot, sharesSlot]
+    )
+    sequence[3] = encode_packed(
+      ['uint8', 'uint256', 'uint64', 'uint64', 'uint8', 'uint8', 'uint8', 'uint8', 'uint16', 'bytes'],
+      [MODIFY_POSITION, poolId, lower, upper, sharesSlot, successSlot, amount0Slot, amount1Slot, len(hookData), hookData]
+    )
+    sequence[4] = encode_packed(
+      ['uint8', 'uint8', 'uint8'],
+      [NEG, sharesSlot, sharesSlot]
+    )
+    sequence[5] = encode_packed(
+      ['uint8', 'uint256', 'uint64', 'uint64', 'uint8', 'uint8', 'uint8', 'uint8', 'uint16', 'bytes'],
+      [MODIFY_POSITION, poolId, lower, upper, sharesSlot, successSlot, amount0Slot, amount1Slot, len(hookData), hookData]
+    )
+    sequence[6] = encode_packed(
+      ['uint8'],
+      [REVERT]
+    )
+    data = encode_packed(['uint32'] + ['bytes'] * len(sequence), [deadline] + sequence)
+    with brownie.reverts('CannotMintAfterBurning: ' + str(poolId) + ', ' + str(lower) + ', '  + str(upper)):
+        nofeeswap.unlock(operator, data, {'from': owner})
 
-    successSlotSync0 = 5
-    successSlotSync1 = 6
+    tagShares = keccak(['uint256', 'int256', 'int256'], [poolId, qMin, qMax])
 
     successSlotTransfer0 = 7
     successSlotTransfer1 = 8
