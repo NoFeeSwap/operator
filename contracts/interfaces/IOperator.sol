@@ -333,12 +333,6 @@ interface IOperator {
   /// @param conditionSlot The transient storage slot containing the condition.
   ///
   ///
-  /// @param REVERT Reverts with the current content of 'returndata' as reason.
-  /// Encoded as:
-  ///
-  /// 'abi.encodePacked(Action Action.REVERT)'
-  ///
-  ///
   /// @param READ_TRANSIENT_BALANCE Reads the transient balance of 'owner' in
   /// 'tag' by invoking:
   ///
@@ -1510,6 +1504,12 @@ interface IOperator {
   /// @param transientSlot The transient storage slot to be read.
   /// @param resultSlot The transient storage slot that will host 'result'.
   ///
+  ///
+  /// @param REVERT Reverts with the current content of 'returndata' as reason.
+  /// Encoded as:
+  ///
+  /// 'abi.encodePacked(Action Action.REVERT)'
+  ///
   enum Action {
     PUSH0,
     PUSH10,
@@ -1533,7 +1533,6 @@ interface IOperator {
     XOR,
     JUMPDEST,
     JUMP,
-    REVERT,
     READ_TRANSIENT_BALANCE,
     READ_BALANCE_OF_NATIVE,
     READ_BALANCE_OF_ERC20,
@@ -1570,7 +1569,8 @@ interface IOperator {
     QUOTE_SWAP,
     QUOTE_MODIFY_POSITION,
     QUOTE_DONATE,
-    QUOTER_TRANSIENT_ACCESS
+    QUOTER_TRANSIENT_ACCESS,
+    REVERT
   }
 
   /// @notice Nofeeswap contract address.
